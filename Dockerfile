@@ -1,5 +1,9 @@
 # Builder
-FROM --platform=$BUILDPLATFORM whatwewant/builder-go:v1.24-1 as builder
+# FROM --platform=$BUILDPLATFORM whatwewant/builder-go:v1.24-1 as builder
+
+# https://blog.csdn.net/sun007700/article/details/120487881
+FROM whatwewant/builder-go:v1.24-1 as builder
+
 
 RUN apt update -y && apt install -y libvips
 

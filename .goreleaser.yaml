@@ -3,14 +3,14 @@ env:
 
 builds:
   - env:
-      - CGO_ENABLED=0
+      - CGO_ENABLED=1
     goos:
       - linux
-      - darwin
+      # - darwin
       # - windows
     goarch:
       - amd64
-      - arm64
+      # - arm64
       # - arm
       # - "386"
     goarm:
