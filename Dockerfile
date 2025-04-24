@@ -59,13 +59,16 @@ RUN CGO_ENABLED=1 \
   -v -o imgproxy ./cmd/imgproxy
 
 # Product
-FROM whatwewant/alpine:v3.17-1
+# FROM whatwewant/alpine:v3.17-1
+FROM whatwewant/ubuntu:v22.04-1
 
 LABEL MAINTAINER="Zero<tobewhatwewant@gmail.com>"
 
 LABEL org.opencontainers.image.source="https://github.com/go-zoox/imgproxy"
 
-RUN apk add --no-cache vips
+RUN apt update -y && apt install -y pkg-config libvips-dev && ldconfig
+
+# RUN apk add --no-cache vips
 
 COPY --from=builder /build/imgproxy /bin
 

@@ -6,7 +6,6 @@ services:
     #   context: .
     #   dockerfile: Dockerfile
     image: whatwewant/imgproxy:v0
+    platform: linux/amd64
     ports:
-      - 0.0.0.0:9000:8080/tcp
-    environment:
-      PREFIX: /files
+      - 0.0.0.0:9998:8080/tcp
