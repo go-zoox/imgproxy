@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/go-zoox/fs"
 	"github.com/go-zoox/safe"
@@ -22,7 +23,7 @@ import (
 )
 
 const DEFAULT_CACHE_DIR = "/tmp/cache/go-zoox/imgproxy"
-const DEFAULT_CACHE_CONTROL = "public, max-age=31536000"
+const DEFAULT_CACHE_MAX_AGE = 31536000 * time.Second
 
 var DEFAULT_ALLOW_CONVERTS = map[string]bool{
 	"jpg":  true,
@@ -36,7 +37,7 @@ type Config struct {
 	//
 	EnableGzip bool
 	//
-	CacheControl string
+	CacheMaxAge time.Duration
 	//
 	CacheDir string
 }
@@ -46,8 +47,8 @@ func Run(cfg *Config) error {
 	if cfg.Port == 0 {
 		cfg.Port = 8080
 	}
-	if cfg.CacheControl == "" {
-		cfg.CacheControl = DEFAULT_CACHE_CONTROL
+	if cfg.CacheMaxAge == 0 {
+		cfg.CacheMaxAge = DEFAULT_CACHE_MAX_AGE
 	}
 	if cfg.CacheDir == "" {
 		cfg.CacheDir = DEFAULT_CACHE_DIR
@@ -120,7 +121,8 @@ func Run(cfg *Config) error {
 				return
 			}
 
-			ctx.SetCacheControl(cfg.CacheControl)
+			// ctx.SetCacheControlWithMaxAge(cfg.CacheMaxAge)
+			ctx.SetCacheControl(fmt.Sprintf("public, max-age=%d", cfg.CacheMaxAge/time.Second))
 			ctx.SetContentType(fmt.Sprintf("image/%s", imgType))
 
 			if _, err := io.Copy(ctx.Writer, f); err != nil {
@@ -189,7 +191,7 @@ func Run(cfg *Config) error {
 			ctx.Logger.Warnf("failed to convert to webp: %s", err.Error())
 		}
 
-		ctx.SetCacheControl(cfg.CacheControl)
+		ctx.SetCacheControl(fmt.Sprintf("public, max-age=%d", cfg.CacheMaxAge/time.Second))
 		ctx.SetContentType(fmt.Sprintf("image/%s", imgType))
 		if err := fs.WriteFile(cacheFilePath, bytes); err != nil {
 			ctx.JSON(http.StatusInternalServerError, zoox.H{
