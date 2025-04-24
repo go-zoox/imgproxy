@@ -20,7 +20,7 @@ jobs:
           go-version: v1.24.0
 
       - name: Install libvips
-        run: sudo apt update -y && sudo apt install -y pkg-config libvips
+        run: sudo apt update -y && sudo apt install -y pkg-config libvips && sudo ldconfig
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v4

@@ -4,7 +4,7 @@
 # https://blog.csdn.net/sun007700/article/details/120487881
 FROM whatwewant/builder-go:v1.24-1 as builder
 
-RUN apt update -y && apt install -y pkg-config libvips-dev
+RUN apt update -y && apt install -y pkg-config libvips-dev && ldconfig
 
 # # Installs libvips + required libraries
 # #  reference: https://github.com/h2non/imaginary/blob/master/Dockerfile
