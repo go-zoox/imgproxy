@@ -5,7 +5,7 @@
 FROM whatwewant/builder-go:v1.24-1 as builder
 
 
-RUN apt update -y && apt install -y libvips
+RUN apt update -y && apt install -y pkg-config libvips
 
 WORKDIR /build
 
