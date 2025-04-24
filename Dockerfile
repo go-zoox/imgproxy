@@ -8,6 +8,8 @@ FROM whatwewant/builder-go:v1.24-1 as builder
 
 # Installs libvips + required libraries
 #  reference: https://github.com/h2non/imaginary/blob/master/Dockerfile
+ARG LIBVIPS_VERSION=8.12.2
+#
 RUN DEBIAN_FRONTEND=noninteractive \
   apt-get update && \
   apt-get install --no-install-recommends -y \
