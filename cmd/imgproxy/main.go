@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"time"
 
 	"github.com/go-zoox/cli"
 	"github.com/go-zoox/core-utils/cast"
@@ -32,6 +32,18 @@ func main() {
 				Usage:   "Enable gzip compression",
 				EnvVars: []string{"ENABLE_GZIP"},
 			},
+			&cli.StringFlag{
+				Name:    "cache-dir",
+				Usage:   "The cache directory, if not set, the cache will be disabled",
+				EnvVars: []string{"CACHE_DIR"},
+				Value:   "/tmp/cache/go-zoox/imgproxy",
+			},
+			&cli.Int64Flag{
+				Name:    "cache-max-age",
+				Usage:   "The cache max age, if not set, the default value is 1 year",
+				EnvVars: []string{"CACHE_MAX_AGE"},
+				Value:   1 * 365 * 24 * 60 * 60,
+			},
 		},
 	})
 
@@ -40,7 +52,9 @@ func main() {
 		cfg.Port = cast.ToInt64(c.String("port"))
 		cfg.EnableGzip = c.Bool("enable-gzip")
 
-		fmt.Println("imgproxy serve on port: ", cfg.Port)
+		cfg.CacheDir = c.String("cache-dir")
+		cfg.CacheMaxAge = time.Duration(c.Int64("cache-max-age")) * time.Second
+
 		return server.Run(&cfg)
 	})
 
