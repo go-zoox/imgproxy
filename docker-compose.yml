@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # image: whatwewant/serve:v1
+    ports:
+      - 0.0.0.0:9000:8080/tcp
+    environment:
+      PREFIX: /files
