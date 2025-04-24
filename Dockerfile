@@ -70,6 +70,8 @@ RUN apt update -y && apt install -y pkg-config libvips-dev && ldconfig
 
 # RUN apk add --no-cache vips
 
+COPY --from=builder /usr/local/lib /usr/local/lib
+COPY --from=builder /etc/ssl/certs /etc/ssl/certs
 COPY --from=builder /build/imgproxy /bin
 
 CMD imgproxy

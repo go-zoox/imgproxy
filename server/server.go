@@ -22,7 +22,7 @@ import (
 )
 
 const DEFAULT_CACHE_DIR = "/tmp/cache/go-zoox/imgproxy"
-const DEFAULT_CACHE_CONTROL = "max-age=31536000"
+const DEFAULT_CACHE_CONTROL = "public, max-age=31536000"
 
 var DEFAULT_ALLOW_CONVERTS = map[string]bool{
 	"jpg":  true,
