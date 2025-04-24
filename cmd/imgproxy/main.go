@@ -15,9 +15,9 @@ import (
 
 func main() {
 	app := cli.NewSingleProgram(&cli.SingleProgramConfig{
-		Name:        "Serve",
-		Usage:       "The Serve",
-		Description: "Server static files",
+		Name:        "imgproxy",
+		Usage:       "The Server of imgproxy",
+		Description: "The Server of imgproxy",
 		Version:     imgproxy.Version,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
@@ -41,7 +41,7 @@ func main() {
 		cfg.EnableGzip = c.Bool("enable-gzip")
 
 		fmt.Println("imgproxy serve on port: ", cfg.Port)
-		return server.Serve(&cfg)
+		return server.Run(&cfg)
 	})
 
 	app.Run()

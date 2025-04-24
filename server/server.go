@@ -41,8 +41,8 @@ type Config struct {
 	CacheDir string
 }
 
-// Serve starts the server.
-func Serve(cfg *Config) error {
+// Run starts the server.
+func Run(cfg *Config) error {
 	if cfg.Port == 0 {
 		cfg.Port = 8080
 	}
@@ -65,6 +65,7 @@ func Serve(cfg *Config) error {
 	}
 
 	app := defaults.Default()
+
 	app.Cron().AddJob("cleanup_image", "0 4 1 * *", func() error {
 		if ok := fs.IsExist(cfg.CacheDir); !ok {
 			return nil

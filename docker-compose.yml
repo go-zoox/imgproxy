@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    # image: whatwewant/serve:v1
+    # image: whatwewant/imgproxy:v1
     ports:
       - 0.0.0.0:9000:8080/tcp
     environment:
