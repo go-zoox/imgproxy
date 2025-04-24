@@ -1,4 +1,4 @@
 package imgproxy
 
 // Version is the version of the application.
-var Version = "0.0.13"
+var Version = "1.0.0"
